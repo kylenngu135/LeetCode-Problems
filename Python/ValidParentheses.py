@@ -1,21 +1,17 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        Dict = {")" : "(", "]" : "[", "}" : "{"}
-        j = -1
-        List = list()
-
-        for i in s:
-            if i in Dict.values():
-                List.append(i)
-                j += 1
-            elif j > -1:
-                if Dict.get(i) == List[j]: 
-                    List.pop(j)
-                    j -= 1
-                else:
-                    return False
-            else:
+        stack = []
+        map = {"{": "}","[": "]","(":")"}
+        size = 0
+        
+        for c in s:
+            if c in map:
+                stack.append(c)
+            elif len(stack) == 0:
                 return False
+            elif map[stack[-1]] != c:
+                return False
+            else:
+                stack.pop()
 
-        return j == -1              
-                                
+        return len(stack) == 0
